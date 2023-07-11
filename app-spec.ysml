@@ -1,0 +1,23 @@
+alerts:
+- rule: DEPLOYMENT_FAILED
+domains:
+- domain: wordsnake-8ueve.ondigitalocean.app
+  type: PRIMARY
+features:
+- enable-kata-build
+region: nyc
+services:
+- dockerfile_path: Dockerfile
+  envs:
+  - key: SPRING_PROFILES_ACTIVE
+    value: production
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: https://github.com/mengzhuou/WordSnakeWebsite.git
+  http_port: 80
+  instance_count: 2
+  instance_size_slug: professional-xs
+  name: wordsnakewebsite
+  routes:
+  - path: /
