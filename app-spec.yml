@@ -1,0 +1,12 @@
+services:
+- cors:
+  dockerfile_path: Dockerfile
+  envs:
+  - key: SPRING_PROFILES_ACTIVE
+    value: production
+  github:
+    branch: main
+    deploy_on_push: true
+  name: wordsnakewebsite
+  routes:
+  - path: /
