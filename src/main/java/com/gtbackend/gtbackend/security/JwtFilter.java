@@ -1,6 +1,7 @@
 package com.gtbackend.gtbackend.security;
 
 import com.gtbackend.gtbackend.model.User;
+import com.gtbackend.gtbackend.service.UserLoader;
 import com.gtbackend.gtbackend.service.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,11 +25,11 @@ import java.util.Optional;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserService userService;
+    private final UserLoader userLoader;
 
-    public JwtFilter(JwtService jwtService, UserService userService) {
+    public JwtFilter(JwtService jwtService, UserLoader userLoader) {
         this.jwtService = jwtService;
-        this.userService = userService;
+        this.userLoader = userLoader;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     for (String role: roles){
                         authorities.add(new SimpleGrantedAuthority(role));
                     }
-                    Optional<User> user = userService.getUser(email);
+                    Optional<User> user = userLoader.loadUserByEmail(email);
 
                     if (user.isPresent() && jwtService.validateToken(jwtToken, user.get())) {
                         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user.get(), null, authorities);

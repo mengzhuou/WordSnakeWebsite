@@ -4,7 +4,6 @@ import com.gtbackend.gtbackend.dao.UserRepository;
 import com.gtbackend.gtbackend.dao.WordAdditionRepository;
 import com.gtbackend.gtbackend.model.User;
 import com.gtbackend.gtbackend.model.WordAddition;
-import com.gtbackend.gtbackend.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,21 +16,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService, UserLoader  {
 
     private UserRepository userRepository;
-    private JwtService jwtService;
-
     private WordAdditionRepository wordAdditionRepository;
 
     @Autowired
     public UserService(
             UserRepository userRepository,
-            JwtService jwtService,
             WordAdditionRepository wordAdditionRepository) {
         this.userRepository = userRepository;
-        this.jwtService = jwtService;
         this.wordAdditionRepository = wordAdditionRepository;
+    }
+
+    @Override
+    public Optional<User> loadUserByEmail(String email) {
+        return userRepository.findById(email);
     }
 
     public Optional<User> getUser(String email){
