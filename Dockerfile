@@ -7,9 +7,23 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-
 FROM openjdk:17
 VOLUME /tmp
 COPY --from=builder /app/target/gtbackend-0.0.1-SNAPSHOT.jar /app.jar
+
+ARG SPRING_DATASOURCE_URL
+ARG SPRING_DATASOURCE_USERNAME
+ARG SPRING_DATASOURCE_PASSWORD
+ARG JWT_SECRET
+ARG JWT_EXPIRATION
+ARG JWT_EXPIRATIONINMS
+
+ENV spring.datasource.url=$SPRING_DATASOURCE_URL
+ENV spring.datasource.username=$SPRING_DATASOURCE_USERNAME
+ENV spring.datasource.password=$SPRING_DATASOURCE_PASSWORD
+ENV jwt.secret=$JWT_SECRET
+ENV jwt.expiration=$JWT_EXPIRATION
+ENV jwt.expirationInMs=$JWT_EXPIRATIONINMS
+
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app.jar"]

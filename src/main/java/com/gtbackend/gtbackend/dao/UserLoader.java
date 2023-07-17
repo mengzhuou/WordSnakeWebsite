@@ -1,4 +1,4 @@
-package com.gtbackend.gtbackend.service;
+package com.gtbackend.gtbackend.dao;
 
 import com.gtbackend.gtbackend.model.User;
 

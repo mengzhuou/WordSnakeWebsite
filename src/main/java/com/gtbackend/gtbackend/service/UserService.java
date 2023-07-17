@@ -1,5 +1,6 @@
 package com.gtbackend.gtbackend.service;
 
+import com.gtbackend.gtbackend.dao.UserLoader;
 import com.gtbackend.gtbackend.dao.UserRepository;
 import com.gtbackend.gtbackend.dao.WordAdditionRepository;
 import com.gtbackend.gtbackend.model.User;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService, UserLoader  {
+public class UserService implements UserDetailsService, UserLoader {
 
     private UserRepository userRepository;
     private WordAdditionRepository wordAdditionRepository;

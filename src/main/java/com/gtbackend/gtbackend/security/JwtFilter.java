@@ -1,8 +1,7 @@
 package com.gtbackend.gtbackend.security;
 
 import com.gtbackend.gtbackend.model.User;
-import com.gtbackend.gtbackend.service.UserLoader;
-import com.gtbackend.gtbackend.service.UserService;
+import com.gtbackend.gtbackend.dao.UserLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
