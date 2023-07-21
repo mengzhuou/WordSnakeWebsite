@@ -17,22 +17,25 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService, UserLoader {
+public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
     private WordAdditionRepository wordAdditionRepository;
 
+    private UserLoader userLoader;
+
     @Autowired
     public UserService(
             UserRepository userRepository,
-            WordAdditionRepository wordAdditionRepository) {
+            WordAdditionRepository wordAdditionRepository,
+            UserLoader userLoader) {
         this.userRepository = userRepository;
         this.wordAdditionRepository = wordAdditionRepository;
+        this.userLoader = userLoader;
     }
 
-    @Override
     public Optional<User> loadUserByEmail(String email) {
-        return userRepository.findById(email);
+        return userLoader.loadUserByEmail(email);
     }
 
     public Optional<User> getUser(String email){
